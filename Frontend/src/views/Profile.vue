@@ -1,8 +1,11 @@
 <template>
   <div>
-    <h1> <b-avatar variant="primary" size="4rem" v-if="this.userDB.data.avatar == ''"></b-avatar> My Profile {{this.userDB.data.name}}</h1>
-    <b-avatar v-if="this.userDB.data.avatar != ''" size="4rem" :src="this.userDB.data.avatar"></b-avatar>
-    <div class="album py-5 bg-light">
+    <h1>  Welcome {{this.userDB.data.name}}</h1>
+    <div class="mx-auto">
+      <b-avatar variant="primary" size="4rem" v-if="this.userDB.data.avatar == ''"></b-avatar>
+      <b-avatar v-if="this.userDB.data.avatar != ''" size="4rem" :src="this.userDB.data.avatar"></b-avatar>
+    </div>
+    <div class="album py-5 bg-light" v-if="this.posts.length != 0">
       <div class="container">
         <div class="row">
           <div class="col-md-4" v-for="(item, index) of posts" :key="index">
@@ -20,6 +23,10 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="">
+      <b-alert show variant="warning my-4">Parece que aun no has publicado nada</b-alert>
+      <!-- <h1 v-if="this.posts.length == 0"><A>Parece que aun no has publicado nada </A></h1> -->
     </div>
   </div>
 </template>
@@ -56,6 +63,10 @@ export default {
           }})
             .then(res => {
                 this.posts = res.data
+                console.log(res.data);
+                
+                console.log(this.posts);
+                
             }).catch(e => {
                 console.log(e);
             });

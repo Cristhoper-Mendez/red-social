@@ -1,5 +1,6 @@
 import User from "../models/user";
 import { Image } from "../models";
+import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 const saltRounds = 10;
 import { verifyAuth } from "../middlewares/authenticate";
@@ -12,7 +13,15 @@ ctrl.createUsers = async (req, res) => {
   
     try {
         const userDB = await User.create(body);
-        res.json(userDB);
+        
+        let token = jwt.sign({
+            data: userDB,
+        }, 'secret', {expiresIn: 60*60*24*30} )
+        
+        res.json({
+            userDB,
+            token
+        });
       
     } catch (error) {
       return res.status(500).json({

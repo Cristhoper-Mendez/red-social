@@ -14,7 +14,7 @@ const userSchema = new Schema({
 });
 
 // Validator
-userSchema.plugin(uniqueValidator, { message: 'Error, esperaba {PATH} único.' });
+userSchema.plugin(uniqueValidator, { message: 'Error, el {PATH} debe ser único.' });
 
 //Delete password from res json
 userSchema.methods.toJSON = function(){

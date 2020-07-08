@@ -32,7 +32,7 @@ ctrl.login = async (req, res) => {
 
     } catch (error) {
         return res.status(400).json({
-            message: 'Ocurrio un error',
+            message,
             error
         });
     }
