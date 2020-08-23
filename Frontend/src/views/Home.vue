@@ -1,7 +1,8 @@
 <template>
   <div class="container">
-    <div class="card">
-      <div class="card-header" style="background-color: #9fa9a3;">
+    <Modal />
+    <div class="card" style="background-color: #C0C0C0;">
+      <div class="card-header" style="background-color: #8d9db6;">
         <h3 class="card-title text-white">
           <b-icon-image class></b-icon-image>Upload an image
         </h3>
@@ -40,7 +41,7 @@
             <h4>{{ err }}</h4>
           </div>
           <div class="form-group">
-            <button class="btn btn-primary" :disabled="file === null">
+            <button class="btn btn-primary" :disabled="file === null" v-b-modal.modal-tall>
               <b-icon-cloud-upload class></b-icon-cloud-upload>Upload Image
             </button>
           </div>
@@ -53,8 +54,8 @@
           <BIconImageAlt></BIconImageAlt>Recents uploads
         </h3>
       </div>
-      
-      <div class="album py-5 bg-light">
+
+      <div class="album py-2 bg-light">
         <div class="container">
           <div class="row">
             <div class="col-md-4" v-for="(item, index) of posts" :key="index">
@@ -79,15 +80,18 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-// 4:40:27
 import { BIconImage, BIconCloudUpload, BIconImageAlt } from "bootstrap-vue";
+import Modal from "@/components/Modal";
+import Stats from "@/components/Stats";
 import router from "../router";
 export default {
   name: "Home",
   components: {
     BIconImage,
     BIconCloudUpload,
-    BIconImageAlt
+    BIconImageAlt,
+    Modal,
+    Stats,
   },
   data() {
     return {
@@ -98,26 +102,27 @@ export default {
       CLOUDINARY_UPLOAD_PRESET: "zpmmi49a",
       resCloud: {},
       posts: [],
-      post: {}
+      post: {},
+      cargar: false,
+      isOpen: false,
     };
   },
   created() {
     this.getPosts();
   },
   methods: {
-    ...mapActions(['getStats', 'getPopular', 'getComments']),
+    ...mapActions(["getStats", "getPopular", "getComments"]),
     getPosts() {
       this.axios
         .get("/images")
-        .then(response => {
+        .then((response) => {
           this.posts = response.data.images;
-          this.getStats(response.data.sidebar.stats)
-          this.getPopular(response.data.sidebar.popular)
-          this.getComments(response.data.sidebar.comments)
-          console.log(response.data.sidebar);
-          
+          this.getStats(response.data.sidebar.stats);
+          this.getPopular(response.data.sidebar.popular);
+          this.getComments(response.data.sidebar.comments);
+          // console.log(response.data.sidebar);
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
     },
@@ -138,9 +143,11 @@ export default {
     async sendPost(item) {
       let config = {
         headers: {
-          token: this.token
-        }
-      }
+          token: this.token,
+        },
+      };
+
+      this.cargar = true;
 
       let formData = new FormData();
       formData.append("file", this.image); // le damos los datos de la imagen luego que se lleno en la funcion processFile()
@@ -149,23 +156,24 @@ export default {
 
       //subiendo imagen con fetch
       fetch(this.CLOUDINARY_URL, { method: "POST", body: formData })
-        .then(response => response.json()) //convertimos la respuesta en json
-        .then(data => (this.post.fileName = data.url))
+        .then((response) => response.json()) //convertimos la respuesta en json
+        .then((data) => (this.post.fileName = data.url))
         .then(() => {
-          this.axios.post("/newImage", item, config)
-            .then(res => {
+          this.axios
+            .post("/newImage", item, config)
+            .then((res) => {
               this.posts.unshift(res.data);
-              router.push({name: 'ViewImage', params: { id: res.data._id }})
+              router.push({ name: "ViewImage", params: { id: res.data._id } });
             })
-            .catch(e => {
+            .catch((e) => {
               console.log(e).response.data.error.errors.name.message;
             });
         }) // obtenemos la url de la imagen guardada
-        .catch(error => console.log("ocurrio un error ", error)); //capturamos un posible error
-    }
+        .catch((error) => console.log("ocurrio un error ", error)); //capturamos un posible error
+    },
   },
-  computed:{
-    ...mapState(['token'])
-  }
+  computed: {
+    ...mapState(["token"]),
+  },
 };
 </script>

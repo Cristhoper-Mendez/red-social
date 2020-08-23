@@ -15,7 +15,7 @@
             <input type="email" placeholder="Email" class="form-control my-2" v-model="user.email">
             <input type="password" placeholder="Password" class="form-control my-2" v-model="user.password">
             <input type="text" placeholder="User name" class="form-control my-2" v-model="user.name">
-            <b-button class="btn-block btn-info" type="submit">Login</b-button>
+            <b-button class="btn-block btn-info" type="submit">Sign In</b-button>
         </form>
         <!-- <div v-if="message != ''" class="my-2">
             <p>{{message}}</p>
@@ -53,7 +53,7 @@ export default {
                     this.$router.push({name: 'Profile'})
                 }).catch(e => {
                     this.mensaje.color = 'danger'
-                    this.mensaje.texto = e.response.data.message
+                    this.mensaje.texto = e.response.data.error.message
                     this.showAlert()
                 });
             

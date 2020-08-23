@@ -16,6 +16,15 @@
             <input type="password" placeholder="Password" class="form-control my-2" v-model="user.password">
             <b-button class="btn-block btn-info" type="submit">Login</b-button>
         </form>
+        <div class="my-4 mx-auto">
+            <h4>Aun no tienes cuenta? </h4> 
+            <router-link :to="{ name: 'SignIn' }">
+                <b-button variant='primary'>
+                    Crea una cuenta aqui
+                </b-button>
+            </router-link>
+        </div>
+        
     </div>
 </template>
 

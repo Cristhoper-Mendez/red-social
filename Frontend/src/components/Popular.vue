@@ -9,8 +9,7 @@
               <b-img :src="item.fileName" class="w-100 h-100 img-thumbnail"></b-img>
             </router-link>
           </div>
-        </div>>
-
+        </div>
     </div>
    
 </template>

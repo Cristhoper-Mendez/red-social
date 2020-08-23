@@ -1,7 +1,7 @@
 <template>
     <div class="card mt-2" v-if="sidebarComments">
-        <div class="card-header bg-dark">
-            <h5>latest comments</h5>
+        <div class="card-header bg-dark text-white">
+            <h5> <BIconClock /> Latest comments</h5>
         </div>
         <div class="card-body">
             <div class="row" v-for="(item, index) in sidebarComments" :key="index">
@@ -26,10 +26,14 @@
 
 <script>
 import { mapState } from "vuex";
+import { BIconClock } from "bootstrap-vue";
 import moment from "moment";
 
 export default {
     name: 'Comments',
+    components: {
+        BIconClock
+    },
     computed:{
         ...mapState(['sidebarComments'])
     },

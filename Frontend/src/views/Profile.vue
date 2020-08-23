@@ -24,9 +24,21 @@
         </div>
       </div>
     </div>
-    <div class="">
-      <b-alert show variant="warning my-4">Parece que aun no has publicado nada</b-alert>
-      <!-- <h1 v-if="this.posts.length == 0"><A>Parece que aun no has publicado nada </A></h1> -->
+    <div class="card my-3" v-if="this.posts.length == 0">
+      <div class="card-header">
+        <b-alert show variant="warning my-4" >Parece que aun no has publicado nada</b-alert>
+        <!-- <p>Quires crear una publicacion?</p> -->
+      </div>
+      <div class="card-body">
+        <b-alert variant="dark" show>Quieres crear una publicacion?</b-alert>
+      </div>
+      <div class="card-footer">
+        <router-link :to="{ name: 'Home' }">
+          <b-button variant='primary' class='btn-block'>
+            Click aqui!!
+          </b-button>
+        </router-link>
+      </div>
     </div>
   </div>
 </template>

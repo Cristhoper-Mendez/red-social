@@ -21,7 +21,6 @@ export default new Vuex.Store({
         state.userDB = ''
       } else {
         state.userDB = decode(payload);
-        // router.push({name: 'Home'})
       }
     },
     setStats(state, payload){

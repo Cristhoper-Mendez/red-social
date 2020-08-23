@@ -1,13 +1,14 @@
+//imports
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import path from 'path';
 import errorhandler from "errorhandler";
-require('dotenv').config();
 
+//Inicitializations
+require('dotenv').config();
 require('./database')
 const app = express();
-
 
 //settings
 app.set('port', process.env.PORT || 3000);

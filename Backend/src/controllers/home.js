@@ -9,7 +9,7 @@ ctrl.index = async (req, res) => {
         viewModel.images = imagesDB;
         viewModel = await sidebar(viewModel)
         res.json(viewModel)
-        console.log(viewModel);
+        // console.log(viewModel);
         
     } catch (error) {
         return res.status(400).json({
