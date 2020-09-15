@@ -1,8 +1,7 @@
 <template>
   <div>
-    <div style="background-color: #C0C0C0;" class="card" >
-      
-      <div 
+    <div style="background-color: #C0C0C0;" class="card">
+      <div
         style="background-color: #8d9db6;"
         class="card-header d-flex justify-content-between align-items-center"
       >
@@ -23,16 +22,14 @@
         </div>
       </div>
       <div class="card-footer d-flex justify-content-between align-items-center">
-        <b-button v-if="this.liked === false" variant="success" @click="postLike()">
-          Like
-          <BIconHandThumbsUp />
+        <b-button v-if="this.liked === false" @click="postLike()">
+          <BIconHeart />
         </b-button>
 
-        <b-button v-if="this.liked === true" variant="success" @click="postLike()">
-          Dislike
-          <BIconHandThumbsUp />
+        <b-button v-if="this.liked === true" variant="primary" @click="postLike()">
+          <BIconHeartFill />
         </b-button>
-        
+
         <p>
           <span>
             {{ likes }}
@@ -54,14 +51,25 @@
         <span>Inicia sesion para poder comentar</span>
       </div>
       <div class="card-body" v-if="this.token != ''">
-        <b-navbar toggleable>
-          <h1>
+        <b-navbar toggleable style="background-color: #8d9db6;">
+          <!-- <h1>
             Comments
             <BIconChatSquareDotsFill />
-          </h1>
-          <b-navbar-toggle target="navbar-toggle-collapse" style="background-color: #8d9db6;">
+          </h1> -->
+
+          <b-navbar-brand href="#">Comments  <BIconChatSquareDotsFill /></b-navbar-brand>
+
+          <!-- <b-navbar-toggle target="navbar-toggle-collapse" style="background-color: #8d9db6;">
             <template v-slot:default="{ expanded }">
               <small>Write a comment</small>
+              <b-icon v-if="expanded" icon="chevron-bar-up"></b-icon>
+              <b-icon v-else icon="chevron-bar-down"></b-icon>
+            </template>
+          </b-navbar-toggle>-->
+
+          <b-navbar-toggle target="navbar-toggle-collapse" >
+            <template v-slot:default="{ expanded }">
+              <small>Write a comment  </small>
               <b-icon v-if="expanded" icon="chevron-bar-up"></b-icon>
               <b-icon v-else icon="chevron-bar-down"></b-icon>
             </template>
@@ -112,7 +120,7 @@
 
 <style>
 .title,
-.description{
+.description {
   text-transform: capitalize;
 }
 </style>
@@ -150,7 +158,7 @@ export default {
       likes: "",
       comment: {},
       comments: [],
-      liked: false
+      liked: null,
     };
   },
   created() {
@@ -196,13 +204,19 @@ export default {
         });
     },
     getPost(id) {
+      let config = {
+        headers: {
+          token: this.token,
+        },
+      };
 
       this.axios
-        .get(`/images/${this.image_id}`)
+        .get(`/images/${this.image_id}`, config)
         .then((result) => {
           this.post = result.data.postDB;
           this.likes = result.data.postDB.likes;
           this.comments = result.data.commentDB;
+          this.liked = result.data.liked;
           console.log(result);
         })
         .catch((err) => {
@@ -236,5 +250,5 @@ export default {
   computed: {
     ...mapState(["token", "userDB"]),
   },
-}
+};
 </script>

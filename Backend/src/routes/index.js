@@ -4,11 +4,12 @@ const router = express.Router();
 import home from "../controllers/home";
 import img from "../controllers/images";
 import { verifyAuth } from "../middlewares/authenticate";
+import { auth } from "../middlewares/auth";
 
 //get all images
 router.get('/images', home.index);
 //get one image
-router.get('/images/:image_id', img.index);
+router.get('/images/:image_id', auth, img.index);
 //create a post image
 router.post('/newImage', verifyAuth, img.createPost);
 //add like a image

@@ -17,7 +17,7 @@
           <b-nav-item :to="{name: 'Home'}" >
             <img src="../assets/imgshare-logo.png" id="Image" :to="{name: 'Home'}">
           </b-nav-item>
-          <b-nav-item :to="{name: 'About'}" exact>
+          <b-nav-item :to="{name: 'Home'}" exact>
             Home
             <span class="sr-only">(current)</span>
           </b-nav-item>
@@ -25,7 +25,11 @@
             Profile
             <span class="sr-only">(current)</span>
           </b-nav-item>
-          <a class="nav-item nav-link" href="#">Nose we xd</a>
+          <!-- <a class="nav-item nav-link" href="#">About Me</a> -->
+          <b-nav-item :to="{name: 'About'}" exact>
+            About Me
+            <span class="sr-only">(current)</span>
+          </b-nav-item>
           <b-nav-item to="/login" v-if="!isActive">Login</b-nav-item>
           <b-nav-item to="/notes" v-if="isActive" @click="logout()">Logout</b-nav-item>
         </div>

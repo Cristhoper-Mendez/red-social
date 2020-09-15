@@ -4,7 +4,7 @@
     <div class="card" style="background-color: #C0C0C0;">
       <div class="card-header" style="background-color: #8d9db6;">
         <h3 class="card-title text-white">
-          <b-icon-image class></b-icon-image>Upload an image
+          <b-icon-image class></b-icon-image>  Upload an image
         </h3>
       </div>
       <div class="card-body">

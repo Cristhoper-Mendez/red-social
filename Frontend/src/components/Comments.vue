@@ -1,6 +1,6 @@
 <template>
     <div class="card mt-2" v-if="sidebarComments">
-        <div class="card-header bg-dark text-white">
+        <div class="card-header text-white" style="background-color: #8d9db6;">
             <h5> <BIconClock /> Latest comments</h5>
         </div>
         <div class="card-body">

@@ -1,6 +1,6 @@
 <template>
     <div class="card mb-2">
-        <div class="card-header bg-dark text-white">
+        <div class="card-header text-white" style="background-color: #8d9db6;">
             <h5> <BIconArrowUp/> Most popular</h5>
         </div>
         <div class="row">
