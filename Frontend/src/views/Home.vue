@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Modal />
-    <div class="card" style="background-color: #C0C0C0;">
+    <div class="card" style="background-color: #B7C6CE;" v-if="this.token">
       <div class="card-header" style="background-color: #8d9db6;">
         <h3 class="card-title text-white">
           <b-icon-image class></b-icon-image>  Upload an image
@@ -55,10 +55,10 @@
         </h3>
       </div>
 
-      <div class="album py-2 bg-light">
-        <div class="container">
+      <div class="album  bg-light" v-if="this.error === false">
+        <div class="container" style="background-color: #B7C6CE">
           <div class="row">
-            <div class="col-md-4" v-for="(item, index) of posts" :key="index">
+            <div class="col-md-4 py-2" v-for="(item, index) of posts" :key="index">
               <div
                 class="card border-primary mb-3"
                 style="max-width: 18rem; background-color: #8d9db6;"
@@ -73,6 +73,9 @@
             </div>
           </div>
         </div>
+      </div>
+      <div v-if="this.error === true">
+        <h2>Parece que no hay nada aqui</h2>
       </div>
     </div>
   </div>
@@ -96,6 +99,7 @@ export default {
   data() {
     return {
       err: null,
+      error: false,
       image: [],
       file: null,
       CLOUDINARY_URL: "https://api.cloudinary.com/v1_1/djy2hxzcz/upload",
@@ -111,19 +115,16 @@ export default {
     this.getPosts();
   },
   methods: {
-    ...mapActions(["getStats", "getPopular", "getComments"]),
     getPosts() {
       this.axios
         .get("/images")
         .then((response) => {
-          this.posts = response.data.images;
-          this.getStats(response.data.sidebar.stats);
-          this.getPopular(response.data.sidebar.popular);
-          this.getComments(response.data.sidebar.comments);
-          // console.log(response.data.sidebar);
+          this.posts = response.data;
+          // console.log(response);
         })
         .catch((e) => {
           console.log(e);
+          this.error = true
         });
     },
     processFile(event) {

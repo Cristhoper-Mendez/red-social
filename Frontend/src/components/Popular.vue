@@ -4,7 +4,7 @@
             <h5> <BIconArrowUp/> Most popular</h5>
         </div>
         <div class="row">
-          <div class="col-md-4"  v-for="item in sidebarPopular" :key="item.id">
+          <div class="col-md-4"  v-for="item in popular.popular" :key="item.id">
             <router-link :to="{ name: 'ViewImage', params: { id: item._id } }">
               <b-img :src="item.fileName" class="w-100 h-100 img-thumbnail"></b-img>
             </router-link>
@@ -19,16 +19,9 @@ import { BIconArrowUp } from "bootstrap-vue";
 
 export default {
     name: 'Popular',
-    data(){
-        return{
-            
-        }
-    },
     components:{
         BIconArrowUp
     },
-    computed:{
-        ...mapState(['sidebarPopular'])
-    }
+    props: ['popular']
 }
 </script>

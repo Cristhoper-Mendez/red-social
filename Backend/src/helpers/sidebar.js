@@ -1,20 +1,21 @@
-const Images = require('./images');
-const Comments = require('./comments');
-const Stats = require('./stats')
+const Images = require("./images");
+const Comments = require("./comments");
+const Stats = require("./stats");
 
-module.exports = async viewModel => {
+module.exports = async () => {
+  const results = await Promise.all([
+    Images.popular(),
+    Stats(),
+    Comments.newest(),
+  ]);
 
-    const results = await Promise.all([
-        Images.popular(),
-        Stats(),
-        Comments.newest()
-    ])
+  let stats = {};
 
-    viewModel.sidebar = {
-        popular: results[0],
-        stats: results[1],
-        comments: results[2]
-    };
-    
-    return viewModel;
-}
+  stats.sidebar = {
+    popular: results[0],
+    stats: results[1],
+    comments: results[2],
+  };
+
+  return stats;
+};

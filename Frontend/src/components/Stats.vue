@@ -4,10 +4,10 @@
             <h5>Stats <BIconClipboardData /></h5>
         </div>
         <div class="card-body">
-            <p> <BIconImages/> Images: {{sidebarStats.images}}</p>
-            <p> <BIconChatDotsFill/> Comments: {{sidebarStats.comments}}</p>
-            <p> <BIconHandThumbsUp/> Likes: {{sidebarStats.likes}} </p>
-            <p> <BIconEyeFill/> Views: {{sidebarStats.views}} </p>
+            <p> <BIconImages/> Images: {{stats.stats.image}}</p>
+            <p> <BIconChatDotsFill/> Comments: {{stats.stats.comments}}</p>
+            <p> <BIconHandThumbsUp/> Likes: {{stats.stats.likes}} </p>
+            <p> <BIconEyeFill/> Views: {{stats.stats.views}} </p>
         </div>
     </div>
 </template>
@@ -24,8 +24,6 @@ export default {
         BIconHandThumbsUp,
         BIconEyeFill
     },
-    computed:{
-        ...mapState(['sidebarStats'])
-    }
+    props: ['stats']
 }
 </script>
